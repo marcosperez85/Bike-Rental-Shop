@@ -1,0 +1,39 @@
+psql --username=freecodecamp --dbname=postgres
+
+
+create database bikes;
+
+\c bikes;
+
+create table bikes(
+	bike_id SERIAL PRIMARY KEY,
+	type VARCHAR(50) NOT NULL,
+	size INT NOT NULL,
+	available BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+create table customers(
+	customer_id SERIAL PRIMARY KEY,
+	phone VARCHAR(15) NOT NULL UNIQUE,
+	name VARCHAR(40) NOT NULL
+);
+
+create table rentals(
+	rental_id SERIAL PRIMARY KEY,
+	customer_id INT REFERENCES customers(customer_id) NOT NULL,
+	bike_id INT REFERENCES bikes(bike_id) NOT NULL,
+	date_rented DATE NOT NULL DEFAULT NOW(),
+	date_returned DATE
+);
+
+insert into bikes(type,size) values
+('Mountain',27),
+('Mountain',28),
+('Mountain',29),
+('Road',27),
+('Road',28),
+('Road',29),
+('BMX',19),
+('BMX',20),
+('BMX',21);
+
